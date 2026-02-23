@@ -1,0 +1,184 @@
+[include fluidd.cfg]
+[include macros/*]
+[include SO3.cfg]
+
+[stepper_x]
+step_pin: PC2
+dir_pin: PB9
+enable_pin: !PC3
+microsteps: 16
+rotation_distance: 40
+endstop_pin: ^PA5
+position_endstop: -4
+position_min: -4
+position_max: 235
+homing_speed: 80
+second_homing_speed: 20
+
+[stepper_y]
+step_pin: PB8
+dir_pin: PB7
+enable_pin: !PC3
+microsteps: 16
+rotation_distance: 40
+endstop_pin: ^PA6
+position_endstop: 0
+position_min: 0
+position_max: 235
+homing_speed: 80
+second_homing_speed: 20
+
+[stepper_z]
+step_pin: PB6
+dir_pin: !PB5
+enable_pin: !PC3
+microsteps: 16
+rotation_distance: 8
+endstop_pin: probe:z_virtual_endstop
+#position_endstop: 0.0
+position_min:-5
+position_max: 250
+
+[extruder]
+max_extrude_only_distance: 100.0
+step_pin: PB4
+dir_pin: PB3
+enable_pin: !PC3
+microsteps: 16
+rotation_distance: 34.406
+nozzle_diameter: 0.400
+filament_diameter: 1.750
+heater_pin: PA1
+sensor_type: EPCOS 100K B57560G104F
+sensor_pin: PC5
+#control: pid
+# tuned for stock hardware with 200 degree Celsius target
+#pid_Kp: 21.527
+#pid_Ki: 1.063
+#pid_Kd: 108.982
+min_temp: 0
+max_temp: 250
+max_extrude_cross_section: 5
+
+[heater_bed]
+heater_pin: PA2
+sensor_type: EPCOS 100K B57560G104F
+sensor_pin: PC4
+control: pid
+# tuned for stock hardware with 50 degree Celsius target
+pid_Kp: 54.027
+pid_Ki: 0.770
+pid_Kd: 948.182
+min_temp: 0
+max_temp: 130
+
+[fan]
+pin: PA0
+
+[mcu]
+serial: /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0
+restart_method: command
+
+[printer]
+kinematics: cartesian
+max_velocity: 300
+max_accel: 2000
+max_z_velocity: 15
+max_z_accel: 100
+
+######################################################################
+# 128x64 Full Graphic Creality CR10 / ENDER 3 stockdisplay
+######################################################################
+
+# This section is used for a Creality "12864" display with a single
+# ribbon cable between the display's EXP3 plug and the
+# micro-controller board's EXP1 connector.
+
+[display]
+lcd_type: st7920
+cs_pin: EXP1_7
+sclk_pin: EXP1_6
+sid_pin: EXP1_8
+encoder_pins: ^EXP1_5, ^EXP1_3
+click_pin: ^!EXP1_2
+
+#====================================================================
+# Raspberry Pi Temperature Display for Mainsail
+#====================================================================
+
+[temperature_sensor raspberry_pi]
+sensor_type: temperature_host
+min_temp: 10
+max_temp: 100
+
+[temperature_sensor mcu_temp]
+sensor_type: temperature_mcu
+min_temp: 0
+max_temp: 100
+
+[output_pin beeper]
+pin: EXP1_1
+
+[board_pins]
+aliases:
+  EXP1_1=PC6,EXP1_3=PB10,EXP1_5=PB14,EXP1_7=PB12,EXP1_9=<GND>,
+  EXP1_2=PB2,EXP1_4=PB11,EXP1_6=PB13,EXP1_8=PB15,EXP1_10=<5V>,
+  PROBE_IN=PB1,PROBE_OUT=PB0,FIL_RUNOUT=PA4
+
+[display_status]
+
+[bltouch]
+sensor_pin: ^PB1
+control_pin: PB0
+x_offset: -40
+y_offset: -12
+#z_offset: 0
+pin_up_touch_mode_reports_triggered: False  # Add for BLTouch v3 or clones
+probe_with_touch_mode: true
+stow_on_each_sample: false
+
+[bed_mesh]
+speed: 120
+mesh_min: 10, 10
+mesh_max: 195, 215
+probe_count: 5,5
+algorithm: bicubic
+
+[safe_z_home]
+#x=middle of the plate -(x prob offset) = 117.5 - (-40) = 157
+#y=middle of the plate - (y prob offset) = 117.5 - (-12) = 129
+home_xy_position: 157, 129
+speed: 75
+z_hop: 10
+z_hop_speed: 15
+
+#*# <---------------------- SAVE_CONFIG ---------------------->
+#*# DO NOT EDIT THIS BLOCK OR BELOW. The contents are auto-generated.
+#*#
+#*# [extruder]
+#*# control = pid
+#*# pid_kp = 26.112
+#*# pid_ki = 1.554
+#*# pid_kd = 109.669
+#*#
+#*# [bltouch]
+#*# z_offset = 2.030
+#*#
+#*# [bed_mesh default]
+#*# version = 1
+#*# points =
+#*# 	  -0.022500, -0.005000, -0.005000, -0.012500, -0.012500
+#*# 	  -0.010000, -0.005000, -0.005000, -0.020000, -0.007500
+#*# 	  0.007500, 0.012500, 0.010000, -0.015000, -0.020000
+#*# 	  0.010000, 0.022500, 0.017500, -0.002500, -0.005000
+#*# 	  0.012500, 0.015000, 0.015000, 0.000000, 0.007500
+#*# x_count = 5
+#*# y_count = 5
+#*# mesh_x_pps = 2
+#*# mesh_y_pps = 2
+#*# algo = bicubic
+#*# tension = 0.2
+#*# min_x = 73.6799
+#*# max_x = 146.2799
+#*# min_y = 73.6801
+#*# max_y = 146.2801
