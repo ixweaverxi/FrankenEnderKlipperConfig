@@ -1,0 +1,18 @@
+# Klipper logs
+*.log
+
+# Gcode files
+*.gcode
+*.gco
+
+# timelapse
+timelapse/
+
+# cache
+.cache/
+
+# backup configs
+printer-*.cfg
+
+# system files
+.DS_Store
